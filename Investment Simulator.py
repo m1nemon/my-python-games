@@ -1,4 +1,4 @@
-import turtle, random, winsound, threading
+import turtle, random
 
 def base10_base(base10, tobase):
     end = ""
@@ -64,12 +64,10 @@ def create_button(turtle, room, next_room, next_room_function, startx, starty, w
         turtle.end_fill()
     buttons.append([room, next_room, next_room_function, startx, starty, startx + width, starty + height])
 
-
 def on_button_click(new_room, room_function):
     global current_room
     current_room = new_room
     room_function()
-
 
 def clear_room():
     global buttons, rolling_slots
@@ -84,8 +82,6 @@ def clear_room():
         roulette.clear()
     buttons = []
 
-
-
 def change_slot_image(turt, num):
     if num == 0:
         turt.shape("turtle")
@@ -97,6 +93,11 @@ def change_slot_image(turt, num):
         turt.shape("circle")
         turt.color("blue")
 
+def text(text,color,font,x,y,align="left",move=False):
+    bg.goto(x,y)
+    bg.color(color)
+    bg.write(text, move, align, font)
+
 
 
 
@@ -104,7 +105,7 @@ def change_slot_image(turt, num):
 
 
 def setup():
-    global base_key, buttons, current_room, title_font, money_font, moneys, opened_slots, opened_roulette
+    global base_key, buttons, current_room, title_font, money_font, moneys, opened_slots, opened_roulette, buttons_color
     base_key = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()-=_+{}[]|:;<>,.?/~`"
     buttons = []
     current_room = "title"
@@ -114,6 +115,7 @@ def setup():
     moneys = 10000
     opened_slots = False
     opened_roulette = False
+    buttons_color = "black"
 
 
 def mouse_setup():
@@ -161,12 +163,17 @@ def create_bg_turtle():
 
 def create_title_screen():
     window.tracer(0)
+    play_font = ("Old English Text MT", 50, "normal")
     clear_room()
-    create_button(bg, "title", "hub", create_hub, 400, 100, 500, 75, "rect", "black")
-    create_button(bg, "title", "title", enter_save, 400, 0, 500, 75, "rect", "grey4")
-    create_button(bg, "title", "options", options_menu, 400, -100, 500, 75, "rect", "grey")
-    create_button(bg, "title", "quit", quit, 400, -200, 500, 75, "rect", "white")
+    create_button(bg, "title", "hub", create_hub, 400, 100, 500, 75, "rect", buttons_color)
+    bg.goto(400,100)
+    bg.color("white")
+    bg.write("Play",False,"left",play_font)
+    create_button(bg, "title", "title", enter_save, 400, 0, 500, 75, "rect", buttons_color)
+    create_button(bg, "title", "options", options_menu, 400, -100, 500, 75, "rect", buttons_color)
+    create_button(bg, "title", "quit", quit, 400, -200, 500, 75, "rect", buttons_color)
     bg.goto(0, 350)
+    bg.color("white")
     bg.write("Investment Simulator", False, "center", title_font)
     window.tracer(1)
 
@@ -178,6 +185,7 @@ def create_hub():
     create_button(bg, "hub", "hub", save_code, 710, -490, 200, 100, "rect", "black")
     create_button(bg, "hub", "slots", open_slots, 610, 90, 200, 300, "rect", "red")
     create_button(bg, "hub", "roll", open_roulette, -200, -200, 400, 400, "rectcirc", "grey")
+    create_button(bg, "hub", "stock", open_stock_market,-910,-200,100,50,"rect", "black")
     update_money()
     window.tracer(1)
 
@@ -432,7 +440,6 @@ def spin_roulette():
     roulette.setheading(0)
     for j in range(int(spins)):
         if current_room != "roll": return
-        if j>0 and int(round(roulette.heading(), 0) // 10)%10==0: a.join()
         window.tracer(0)
         roulette.clear()
         roulette.lt(speed)
@@ -461,9 +468,6 @@ def spin_roulette():
         roulette.goto(-500,-25)
         roulette.end_fill()
         window.tracer(1)
-        if int(round(roulette.heading(), 0) // 10)%10==0:
-            a = threading.Thread(target=winsound.Beep, args=[450,50], daemon=True)
-            a.start()
     wheel_heading = round(roulette.heading(),0)
     if wheel_heading//10 % 2 == 0:
         color = "black"
@@ -501,6 +505,9 @@ def chose_roulette_color():
         has_chosen_roulette_color = False
         return
     has_chosen_roulette_color = True
+
+def open_stock_market():
+    pass
 
 def main():
     setup()
