@@ -166,15 +166,14 @@ def create_title_screen():
     play_font = ("Old English Text MT", 50, "normal")
     clear_room()
     create_button(bg, "title", "hub", create_hub, 400, 100, 500, 75, "rect", buttons_color)
-    bg.goto(400,100)
-    bg.color("white")
-    bg.write("Play",False,"left",play_font)
+    text("Play","White",play_font,400,100)
     create_button(bg, "title", "title", enter_save, 400, 0, 500, 75, "rect", buttons_color)
+    text("Enter Save", "White", play_font, 400, 0)
     create_button(bg, "title", "options", options_menu, 400, -100, 500, 75, "rect", buttons_color)
+    text("Options", "White", play_font, 400, -100)
     create_button(bg, "title", "quit", quit, 400, -200, 500, 75, "rect", buttons_color)
-    bg.goto(0, 350)
-    bg.color("white")
-    bg.write("Investment Simulator", False, "center", title_font)
+    text("Quit", "White", play_font, 400, -200)
+    text("Investment Simulator","White",title_font,0,350,"center")
     window.tracer(1)
 
 
@@ -196,8 +195,7 @@ def enter_save():
 
 def save_code():
     save_code = "67"
-    window.textinput("Save code",
-                     save_code + "\nPut this in next time you play to save your progress\nJust put anything")
+    window.textinput("Save code",save_code + "\nPut this in next time you play to save your progress\nJust put anything")
 
 def options_menu():
     window.tracer(0)
@@ -233,9 +231,12 @@ def update_money():
 def open_slots():
     window.tracer(0)
     clear_room()
+    slot_font = ("Old English Text MT", 70, "normal")
     create_button(bg, "slots", "hub", create_hub, -910, 390, 100, 100, "rect", "black")
-    create_button(bg, "slots", "slots", roll_slots, 500, 25, 300, 100, "rect", "grey")
-    create_button(bg, "slots", "slots", change_slot_bet, 500, -125, 300, 100, "rect", "black")
+    create_button(bg, "slots", "slots", roll_slots, 500, 25, 300, 100, "rect", buttons_color)
+    text("Spin", "White", slot_font, 500, 25)
+    create_button(bg, "slots", "slots", change_slot_bet, 500, -125, 300, 100, "rect", buttons_color)
+    text("Bet", "White", slot_font, 500, -125)
     update_money()
     if not opened_slots:
         setup_slots()
@@ -409,11 +410,16 @@ def draw_bg_roulette():
 def open_roulette():
     window.tracer(0)
     clear_room()
+    roll_font = ("Old English Text MT", 70, "normal")
     create_button(bg, "roll", "hub", create_hub, -910, 390, 100, 100, "rect", "black")
-    create_button(bg, "roll", "roll", spin_roulette, 500, 175, 300, 100, "rect", "white")
-    create_button(bg, "roll", "roll", chose_roulette_color, 500, 25, 300, 100, "rect", "gray")
-    create_button(bg, "roll", "roll", chose_roulette_num, 500, -125, 300, 100, "rect", "dim gray")
-    create_button(bg, "roll", "roll", change_roulette_bet, 500, -275, 300, 100, "rect", "black")
+    create_button(bg, "roll", "roll", spin_roulette, 500, 175, 300, 100, "rect", buttons_color)
+    text("Spin","White",roll_font,500,175)
+    create_button(bg, "roll", "roll", chose_roulette_color, 500, 25, 300, 100, "rect", buttons_color)
+    text("Color", "White", roll_font, 500, 25)
+    create_button(bg, "roll", "roll", chose_roulette_num, 500, -125, 300, 100, "rect", buttons_color)
+    text("Number", "White", roll_font, 500, -125)
+    create_button(bg, "roll", "roll", change_roulette_bet, 500, -275, 300, 100, "rect", buttons_color)
+    text("Bet", "White", roll_font, 500, -275)
     update_money()
     if not opened_roulette:
         setup_roulette()
@@ -507,7 +513,10 @@ def chose_roulette_color():
     has_chosen_roulette_color = True
 
 def open_stock_market():
-    pass
+    window.tracer(0)
+    clear_room()
+    create_button(bg, "stock", "hub", create_hub, -910, 390, 100, 100, "rect", "black")
+    window.tracer(1)
 
 def main():
     setup()
